@@ -39,8 +39,7 @@ Vídeo real na abertura: passe `videoSrc` para `ScrollLockedVideoHero` em `src/a
 - Em GSAP com `useGSAP({ scope })`, gatilhos fora do componente precisam ser passados como elemento, nunca como seletor em texto.
 - GSAP atua nos invólucros e Motion nos elementos internos; nunca os dois no mesmo elemento.
 - A abertura usa `position: sticky`: não existe bloqueio de rolagem.
-- Monograma vetorizado do logotipo aprovado. O restante do logotipo não é usado porque
-  contém "Medicina Funcional Integrativa", expressão fora do briefing.
+- Monograma vetorizado do logotipo aprovado.
 
 ## Clínica virtual e células
 
