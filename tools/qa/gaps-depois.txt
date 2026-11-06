@@ -1,0 +1,6 @@
+
+desktop: 8.9 telas de rolagem
+  nenhum intervalo vazio
+
+mobile: 9.34 telas de rolagem
+  nenhum intervalo vazio

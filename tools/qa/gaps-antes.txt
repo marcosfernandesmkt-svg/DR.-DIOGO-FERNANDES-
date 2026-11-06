@@ -1,0 +1,14 @@
+
+desktop: 11.32 telas de rolagem
+  vazio por 1.2 tela(s), de 1350px a 2340px, perto de "O Dr. Diogo Fernandes"
+  vazio por 0.5 tela(s), de 3330px a 3690px, perto de "O Dr. Diogo Fernandes"
+  vazio por 0.5 tela(s), de 4950px a 5310px, perto de "Cuidado em cada etapa"
+  vazio por 0.6 tela(s), de 5850px a 6300px, perto de "Cuidado em cada etapa"
+
+mobile: 11.54 telas de rolagem
+  vazio por 1.2 tela(s), de 1097px a 2026px, perto de "O Dr. Diogo Fernandes"
+  vazio por 0.5 tela(s), de 2954px a 3292px, perto de "O Dr. Diogo Fernandes"
+  vazio por 0.5 tela(s), de 4389px a 4726px, perto de "Cuidado em cada etapa"
+  vazio por 0.5 tela(s), de 5233px a 5570px, perto de "Cuidado em cada etapa"
+
+[exited with code 0]

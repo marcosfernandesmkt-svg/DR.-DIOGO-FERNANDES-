@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #080808;
+  --color-ink-2: #111111;
+  --color-gold: #c6a667;
+  --color-gold-light: #e4d1a5;
+  --color-bone: #f7f5f0;
+  --color-ash: #a6a6a6;
+  --color-deep: #102943;
+  --color-azure: #347cb5;
+  --color-ice: #79b9e4;
+  --font-display: var(--font-bodoni), "Didot", "Bodoni 72", Georgia, serif;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root { --gutter: clamp(1rem, 4vw, 3.5rem); color-scheme: dark; }
+
+html { background: var(--color-ink); -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body {
+  background: var(--color-ink); color: var(--color-bone);
+  font-family: var(--font-sans); font-size: 1rem; line-height: 1.6;
+  -webkit-font-smoothing: antialiased; overflow-x: clip;
+}
+::selection { background: var(--color-gold); color: var(--color-ink); }
+
+:focus-visible { outline: 2px solid var(--color-gold-light); outline-offset: 4px; border-radius: 2px; }
+
+.eyebrow { font-size: .75rem; letter-spacing: .24em; text-transform: uppercase; font-weight: 500; }
+/* Eixo óptico baixo = fios mais grossos: mantém os títulos médios inteiros e legíveis. */
+.display { font-family: var(--font-display); font-weight: 500; font-optical-sizing: none; font-variation-settings: "opsz" 14; letter-spacing: 0; line-height: 1; text-transform: uppercase; }
+.display-xl { font-weight: 400; font-variation-settings: "opsz" 72; letter-spacing: -.01em; }
+.gutter { padding-inline: var(--gutter); }
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+/* Abertura: a altura da trilha define a duração em scroll. */
+.hero-track { height: 280svh; position: relative; }
+.hero-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; contain: paint; }
+/* O nome sempre na letra do logotipo. Espaçamento zero: com qualquer outro, o navegador desliga a ligadura ND. */
+.brand { font-family: var(--font-brand), var(--font-display); font-weight: 400; font-style: normal; font-synthesis: none; font-optical-sizing: none; font-variation-settings: normal; font-feature-settings: "liga" 1; letter-spacing: 0; line-height: 1; text-transform: uppercase; }
+.brand-inline { font-size: .9em; line-height: 1; color: var(--color-gold-light); white-space: nowrap; }
+.name-outline { color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--color-gold-light) 75%, transparent); }
+@media (orientation: portrait) {
+  .hero-track { height: 270svh; }
+  .name-outline { color: var(--color-bone); -webkit-text-stroke: 0; }
+}
+
+/* Sem JS, ou com JS atrasado, o conteúdo final continua visível. */
+html.js:not(.ready) [data-intro] { visibility: hidden; }
+html:not(.js) .hero-hidden-rm { display: none; }
+html.js:not(.ready) .portrait-stage { visibility: hidden; }
+.rm-only, .rm-portrait { display: none; }
+html:not(.js) .rm-only { display: block; }
+html:not(.js) .rm-raise { translate: 0 -4.5rem; }
+
+/* Granulação finíssima: elimina as faixas visíveis nos degradês escuros. */
+.grain { opacity: .05; mix-blend-mode: overlay; background-size: 220px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* Passagens entre seções: só existem com movimento permitido. */
+@media (prefers-reduced-motion: no-preference) {
+  .glyph-track { height: 230svh; }
+  .glyph-stage { position: sticky; top: 0; height: 100svh; }
+  @media (orientation: portrait) { .glyph-track { height: 205svh; } }
+  /* Curtain reveal: o rodapé espera parado atrás do conteúdo, que sobe e o descobre. */
+  .footer-reveal { position: sticky; bottom: 0; }
+  /* O retrato nasce transparente sobre o palco da abertura: há dissolução, nunca um
+     vão entre as duas cenas. A Filosofia, por sua vez, entra sobre o fim do retrato. */
+  html.js .portrait-track { height: 230svh; margin-top: -200svh; pointer-events: none; }
+  html.js .after-portrait { margin-top: -42svh; }
+  @media (orientation: portrait) {
+    html.js .portrait-track { height: 195svh; }
+    html.js .after-portrait { margin-top: 0; }
+  }
+  .portrait-stage { position: sticky; top: 0; }
+}
+.portrait-stage { height: 100svh; min-height: 34rem; overflow: hidden; contain: paint; }
+
+.glyph-stage { min-height: 100svh; overflow: hidden; contain: paint; }
+/* Etapas: dentro da cena em telas largas; abaixo dela em telas estreitas ou baixas. */
+.steps-flow { display: none; }
+@media (orientation: portrait), (max-height: 619px) {
+  .steps-stage { display: none; }
+  .steps-flow { display: block; }
+}
+
+/* Fundo celular: a imagem nunca é alterada, só a câmera e a luz se movem. */
+.cells-camera { animation: cells-push 26s ease-in-out infinite alternate; will-change: transform; }
+@keyframes cells-push { from { transform: scale(1.03) translate3d(.8%, -.5%, 0); } to { transform: scale(1.12) translate3d(-1.4%, .8%, 0); } }
+.cells-light { animation: cells-light 13s ease-in-out infinite alternate; }
+.cells-light.alt { animation-duration: 19s; animation-delay: -6s; }
+@keyframes cells-light { from { opacity: .25; } to { opacity: 1; } }
+.mote { position: absolute; border-radius: 50%; background: var(--color-gold-light); opacity: 0; animation: mote linear infinite; }
+@keyframes mote {
+  0% { opacity: 0; transform: translate3d(0, 0, 0); }
+  18% { opacity: .5; }
+  82% { opacity: .35; }
+  100% { opacity: 0; transform: translate3d(3vw, -9vh, 0); }
+}
+
+/* Cortina dourada do agendamento. */
+.curtain { position: fixed; inset: 0; z-index: 70; visibility: hidden; pointer-events: none; }
+
+/* Espaçamento único entre seções. */
+.section { padding-block: clamp(6.5rem, 13vw, 12rem); }
+
+/* Reflexo dos itens interativos: dourado que se dissolve em azul. */
+.band { position: absolute; inset: 0; transform: scaleX(0); transform-origin: left; transition: transform .75s var(--ease-cine);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-gold) 13%, transparent), color-mix(in srgb, var(--color-azure) 10%, transparent) 58%, transparent); }
+/* Fio de luz que percorre a divisória inferior. */
+.sweep { position: absolute; inset-inline: 0; bottom: -1px; height: 1px; transform: scaleX(0); transform-origin: left; transition: transform .8s var(--ease-cine);
+  background: linear-gradient(90deg, var(--color-gold), var(--color-ice) 70%, transparent); }
+.slide { transition: transform .6s var(--ease-cine), color .35s ease; }
+@media (hover: hover) {
+  .row:hover .band, .row:hover .sweep { transform: scaleX(1); }
+  .row:hover .slide { transform: translateX(clamp(.375rem, 1vw, 1rem)); }
+  .row:hover .ring { border-color: var(--color-ice); color: var(--color-ice); }
+  .row:hover .tint { color: var(--color-gold-light); }
+}
+.ring { transition: border-color .4s ease, color .4s ease; }
+.row:focus-visible .band, .row:active .band, .row:focus-visible .sweep, .row:active .sweep { transform: scaleX(1); }
+.row:focus-visible .tint, .row:active .tint { color: var(--color-gold-light); }
+
+.arrow-a, .arrow-b { transition: transform .55s var(--ease-cine); }
+.arrow-b { position: absolute; inset: 0; transform: translate(-110%, 110%); }
+@media (hover: hover) { .row:hover .arrow-a { transform: translate(110%, -110%); } .row:hover .arrow-b { transform: none; } }
+
+.cue-dot { animation: cue 2.2s var(--ease-cine) infinite; }
+@keyframes cue { 0% { transform: translateY(-.7rem); opacity: 0 } 35% { opacity: 1 } 100% { transform: translateY(.7rem); opacity: 0 } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-track { height: 100svh; }
+  .hero-hidden-rm { display: none !important; }
+  .rm-only { display: block; }
+  .rm-raise { translate: 0 -4.5rem; }
+  .cue-dot { animation: none; }
+  .cells-camera, .cells-light, .mote { animation: none; }
+  .mote { display: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+@media (prefers-reduced-motion: reduce) and (orientation: portrait) { .rm-portrait { display: block; } }

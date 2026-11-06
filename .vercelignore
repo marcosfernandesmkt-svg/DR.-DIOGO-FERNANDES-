@@ -1,0 +1,7 @@
+tools
+README.md
+*.tsbuildinfo
+.next
+node_modules
+AUDITORIA.md
+out

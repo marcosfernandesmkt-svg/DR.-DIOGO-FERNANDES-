@@ -1,0 +1,15 @@
+node_modules
+.next
+next-env.d.ts
+*.tsbuildinfo
+.env*
+tools/media/qa
+tools/qa/out
+.vercel
+out
+tools/car
+tools/qa/antes
+.DS_Store
+AUDITORIA.md
+NOTAS-INTERNAS.md
+tools/media/source/

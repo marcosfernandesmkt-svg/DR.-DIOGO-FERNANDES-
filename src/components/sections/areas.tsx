@@ -1,0 +1,71 @@
+"use client";
+
+import { useRef } from "react";
+import { motion } from "motion/react";
+import { EASE, gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
+import { AREAS } from "@/lib/site";
+import { Fade, Rule } from "../reveal";
+
+export function Areas() {
+  const scope = useRef<HTMLElement>(null);
+
+  /* Editorial Line Reveal: curto, sem pin e sem trilha extra de rolagem. */
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        const arrive = { trigger: scope.current, start: "top 88%", end: "top 42%", scrub: 0.2 };
+        // Só na cena: no celular as etapas são uma lista que ainda está sendo lida.
+        gsap.to(document.querySelector(".gp-content"), { opacity: 0.18, ease: "none", scrollTrigger: arrive });
+        gsap.fromTo(".ed-line", { scaleX: 0 }, { scaleX: 1, ease: "power2.inOut", scrollTrigger: arrive });
+        gsap.fromTo(".ed-glint", { xPercent: -100, opacity: 0 }, { xPercent: 1000, opacity: 1, ease: "none", scrollTrigger: { ...arrive, start: "top 72%", end: "top 30%" } });
+        gsap.fromTo(".ar-title", { yPercent: 112 }, { yPercent: 0, duration: 0.95, ease: "expo.out", scrollTrigger: { trigger: scope.current, start: "top 62%", once: true } });
+      });
+      return () => mm.revert();
+    },
+    { scope },
+  );
+
+  return (
+    <section ref={scope} id="atuacao" tabIndex={-1} className="section relative overflow-clip bg-[#09111a] outline-none">
+      {/* A linha cruza o limite entre as seções; o reflexo azul a percorre */}
+      <span aria-hidden className="ed-line hero-hidden-rm absolute inset-x-0 top-0 block h-px origin-center overflow-hidden bg-linear-to-r from-transparent via-gold to-transparent">
+        <span className="ed-glint absolute inset-y-0 left-0 block w-[12%] bg-linear-to-r from-transparent via-ice to-transparent" />
+      </span>
+      <div className="gutter relative">
+        <p className="eyebrow text-gold">04 / Atuação</p>
+        <div className="mt-7 grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="overflow-hidden pt-[.1em] lg:col-span-8">
+            <h2 className="ar-title display max-w-[16ch] text-balance text-[clamp(2.25rem,5vw,5.25rem)] leading-[1.08] text-bone lg:max-w-none">
+              Um olhar <span className="italic text-gold-light">individual</span> para sua saúde.
+            </h2>
+          </div>
+          <Fade delay={0.1} className="lg:col-span-4">
+            <p className="max-w-[36ch] leading-[1.7] text-bone/68 lg:ml-auto">Conheça algumas das áreas abordadas nos atendimentos do <span className="brand brand-inline">Dr. Diogo Fernandes</span>.</p>
+          </Fade>
+        </div>
+
+        <ol className="mt-16 md:mt-24">
+          {AREAS.map((a) => (
+            <li key={a.n} className="row relative isolate">
+              <Rule className="bg-gold/25!" />
+              <span aria-hidden className="band -z-10" />
+              <motion.div
+                className="grid grid-cols-[3.25rem_1fr] gap-x-4 gap-y-3 py-9 md:grid-cols-12 md:items-center md:gap-x-8 md:py-12"
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+                transition={{ duration: 0.6, ease: EASE }}
+              >
+                <p aria-hidden className="display slide text-[clamp(1.625rem,3vw,3.25rem)] leading-none text-gold md:col-span-1">{a.n}</p>
+                <h3 className="display slide tint text-[clamp(1.5rem,3.1vw,3.25rem)] leading-[1.1] text-bone md:col-span-6">{a.title}</h3>
+                <p className="slide col-start-2 max-w-[42ch] leading-[1.65] text-bone/68 md:col-span-5 md:col-start-8">{a.text}</p>
+              </motion.div>
+            </li>
+          ))}
+          <li aria-hidden><Rule className="bg-gold/25!" /></li>
+        </ol>
+      </div>
+    </section>
+  );
+}
