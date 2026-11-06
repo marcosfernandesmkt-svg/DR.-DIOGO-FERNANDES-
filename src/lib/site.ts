@@ -14,8 +14,8 @@ export const SITE = {
  * `npm run media` e mantenha estes caminhos, ou aponte para os novos aqui.
  */
 export const PHOTOS = {
-  hero: { src: "/media/hero-figure.webp", width: 1024, height: 1536, alt: "Dr. Diogo Fernandes de terno azul-marinho, sorrindo, com as mãos entrelaçadas" },
-  portrait: { src: "/media/portrait.webp", width: 1174, height: 1468, alt: "Retrato do Dr. Diogo Fernandes de terno azul-marinho, com luz lateral" },
+  hero: { src: "/media/hero-figure-2.webp", width: 1024, height: 1536, alt: "Dr. Diogo Fernandes de terno azul-marinho, sorrindo, com as mãos entrelaçadas" },
+  portrait: { src: "/media/portrait-2.webp", width: 1174, height: 1468, alt: "Retrato do Dr. Diogo Fernandes de terno azul-marinho" },
 } as const;
 
 export const AREAS = [
