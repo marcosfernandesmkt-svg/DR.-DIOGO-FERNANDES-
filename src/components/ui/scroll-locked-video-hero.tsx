@@ -45,7 +45,7 @@ function Name({ outline = false }: { outline?: boolean }) {
       <span className={`block text-[clamp(1.6rem,min(5.4vw,11svh),5.5rem)] leading-none portrait:text-[12vw] ${outline ? "name-outline" : ""}`}>
         <Chars text="Dr. Diogo" />
       </span>
-      <span className={`block text-[min(15.6vw,30svh)] leading-[.92] whitespace-nowrap portrait:text-[15.2vw] ${outline ? "name-outline" : ""}`}>
+      <span className={`block text-[min(14.8vw,30svh)] leading-[.92] whitespace-nowrap portrait:text-[14.6vw] ${outline ? "name-outline" : ""}`}>
         <Chars text="Fernandes" />
       </span>
     </>
