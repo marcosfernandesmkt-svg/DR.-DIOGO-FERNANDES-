@@ -3,7 +3,8 @@
 // nenhuma deformação, nenhum preenchimento gerado. Olhos, boca e traços ficam intactos.
 import sharp from "sharp";
 
-const SRC = new URL("./source/terno-recorte.png", import.meta.url).pathname;
+// Foto em alta enviada em 2026-11-07, recortada com tools/media/matte.swift (fundo cinza removido)
+const SRC = new URL("./source/terno-hd-recorte.png", import.meta.url).pathname;
 const OUT = new URL("../../public/media/", import.meta.url).pathname;
 
 const { data, info } = await sharp(SRC).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
@@ -83,8 +84,8 @@ const FADE = (w, h) => `<svg width="${w}" height="${h}" xmlns="http://www.w3.org
 
 /* Escala e posição medidas sobre as imagens anteriores: cabeça, ombros e mãos no mesmo lugar. */
 const CANVAS = [
-  { file: "hero-figure-3.webp", cw: 1536, ch: 2304, scale: 3, left: 219, top: 316, fade: true },
-  { file: "portrait-3.webp", cw: 1174, ch: 1468, scale: 4.01, left: -165, top: 229 },
+  { file: "hero-figure-4.webp", cw: 1536, ch: 2304, scale: 1.195, left: 215, top: 316, fade: true },
+  { file: "portrait-4.webp", cw: 1174, ch: 1468, scale: 1.597, left: -170, top: 229 },
 ];
 for (const { file, cw, ch, scale, left, top, fade } of CANVAS) {
   const s = await scaled(scale), x = Math.max(0, -left), y = Math.max(0, -top);

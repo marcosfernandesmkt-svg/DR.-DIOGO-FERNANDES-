@@ -14,8 +14,8 @@ export const SITE = {
  * `npm run media` e mantenha estes caminhos, ou aponte para os novos aqui.
  */
 export const PHOTOS = {
-  hero: { src: "/media/hero-figure-3.webp", width: 1024, height: 1536, alt: "Dr. Diogo Fernandes de terno azul-marinho, sorrindo, com as mãos entrelaçadas" },
-  portrait: { src: "/media/portrait-3.webp", width: 1174, height: 1468, alt: "Retrato do Dr. Diogo Fernandes de terno azul-marinho" },
+  hero: { src: "/media/hero-figure-4.webp", width: 1024, height: 1536, alt: "Dr. Diogo Fernandes de terno azul-marinho, sorrindo, com as mãos entrelaçadas" },
+  portrait: { src: "/media/portrait-4.webp", width: 1174, height: 1468, alt: "Retrato do Dr. Diogo Fernandes de terno azul-marinho" },
 } as const;
 
 export const AREAS = [
@@ -23,6 +23,27 @@ export const AREAS = [
   { n: "02", title: "Resistência à insulina", text: "Investigação e acompanhamento do metabolismo da glicose e da insulina." },
   { n: "03", title: "Diabetes", text: "Acompanhamento médico direcionado à saúde metabólica individual." },
   { n: "04", title: "Tireoide", text: "Avaliação e acompanhamento de alterações do funcionamento da tireoide." },
+] as const;
+
+/**
+ * Formação informada pela cliente. Pós-graduação não confere título de especialista:
+ * sem RQE, cada pós-graduação vem com "NÃO ESPECIALISTA" (Resolução CFM 2.336/2023, art. 13).
+ */
+export const FORMATION = [
+  { label: "Graduação", title: "Medicina", place: "Universidade São Carlos / Famesc", status: "done" },
+  { label: "Pós-graduação", title: "Endocrinologia", place: "Academia Brasileira de Medicina Funcional Integrativa (ABMFI)", status: "done", notSpecialist: true },
+  { label: "Formação em andamento", title: "Pós-graduando em Nutrologia", place: "Afya Educação Médica", status: "ongoing", notSpecialist: true },
+  { label: "Membro", title: "Academia Brasileira de Medicina Funcional Integrativa (ABMFI)", status: "member" },
+] as const;
+
+export const CARE_TOPICS = [
+  "Obesidade e controle de peso",
+  "Sarcopenia",
+  "Doenças da tireoide",
+  "Lipedema",
+  "Diabetes",
+  "Resistência à insulina",
+  "Demais doenças endócrinas e metabólicas",
 ] as const;
 
 export const STEPS = [
