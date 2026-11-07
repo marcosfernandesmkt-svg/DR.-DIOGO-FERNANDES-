@@ -5,9 +5,8 @@ import { SECURITY_HEADERS } from "./security-headers.mjs";
 /* `npm run build:static` gera a pasta out/: HTML, CSS e JS para qualquer hospedagem. */
 const estatico = process.env.STATIC_EXPORT === "1";
 
-/* Sem domínio definido, usa o de produção da Vercel: nunca publica links para localhost. */
-const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? (vercelUrl ? `https://${vercelUrl}` : undefined);
+/* O domínio oficial fica em src/lib/site.ts; esta variável só serve para testar outro endereço. */
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
 export default function config(phase: string): NextConfig {
   const dev = phase === PHASE_DEVELOPMENT_SERVER;

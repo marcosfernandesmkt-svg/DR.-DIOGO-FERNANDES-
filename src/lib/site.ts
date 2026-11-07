@@ -5,7 +5,8 @@ export const SITE = {
   crm: "CRM-ES 23.787",
   role: "Médico",
   tagline: "Medicina com ciência, atenção e individualidade.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3140",
+  // Domínio oficial: endereço que o Google, o WhatsApp e o sitemap recebem
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.drdiogofernandes.com",
   instagram: { handle: "@drdiogofernandes", href: "https://www.instagram.com/drdiogofernandes/" },
 };
 
