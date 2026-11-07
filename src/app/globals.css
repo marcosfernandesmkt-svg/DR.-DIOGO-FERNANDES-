@@ -148,3 +148,26 @@ html:not(.js) .rm-raise { translate: 0 -4.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) and (orientation: portrait) { .rm-portrait { display: block; } }
+
+/* Botão principal: dourado metálico com um reflexo lento a cada poucos segundos e um brilho que respira. */
+.btn-gold {
+  background: linear-gradient(135deg, #f1e3bd 0%, #dcc086 34%, #c6a667 60%, #a8864a 100%);
+  border: 1px solid rgb(228 209 165 / .75);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), inset 0 -1px 0 rgb(80 60 20 / .35), 0 10px 30px -12px rgb(198 166 103 / .7);
+  transition: transform .5s var(--ease-cine), box-shadow .5s var(--ease-cine), filter .5s var(--ease-cine);
+}
+.btn-gold::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; z-index: -1; width: 38%;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / .55), transparent);
+  transform: translateX(-130%) skewX(-18deg); animation: gold-sheen 6.5s cubic-bezier(.6, 0, .2, 1) 2.4s infinite;
+}
+.btn-gold::after {
+  content: ""; position: absolute; inset: -1px; z-index: -2; border-radius: inherit; pointer-events: none;
+  box-shadow: 0 0 0 0 rgb(228 209 165 / .0); animation: gold-breathe 3.6s ease-in-out infinite;
+}
+.btn-gold:hover { transform: translateY(-1px); filter: brightness(1.05); box-shadow: inset 0 1px 0 rgb(255 255 255 / .6), inset 0 -1px 0 rgb(80 60 20 / .35), 0 16px 38px -12px rgb(228 209 165 / .9); }
+.btn-gold:hover::before { animation-duration: 1.4s; animation-delay: 0s; }
+.btn-gold:active { transform: translateY(0); filter: brightness(.98); }
+@keyframes gold-sheen { 0% { transform: translateX(-130%) skewX(-18deg); } 22%, 100% { transform: translateX(330%) skewX(-18deg); } }
+@keyframes gold-breathe { 0%, 100% { box-shadow: 0 0 0 0 rgb(228 209 165 / 0); } 50% { box-shadow: 0 0 22px 2px rgb(198 166 103 / .28); } }
+@media (prefers-reduced-motion: reduce) { .btn-gold::before, .btn-gold::after { animation: none; } .btn-gold:hover { transform: none; } }

@@ -7,6 +7,8 @@ import { Care } from "@/components/sections/care";
 import { Areas } from "@/components/sections/areas";
 import { Booking } from "@/components/sections/booking";
 import { MotionFooter } from "@/components/ui/motion-footer";
+import { TestimonialsExperience } from "@/components/testimonials-experience";
+import { TESTIMONIALS_ON } from "@/lib/testimonials";
 import { CLINICS, SITE } from "@/lib/site";
 
 const jsonLd = {
@@ -38,6 +40,7 @@ export default function Home() {
         </div>
       </main>
       <MotionFooter />
+      {TESTIMONIALS_ON ? <TestimonialsExperience /> : null}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
     </SmoothScroll>
   );

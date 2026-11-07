@@ -4,6 +4,11 @@ import { motion, useScroll, useSpring } from "motion/react";
 import { Monogram } from "./monogram";
 import { Magnetic } from "./magnetic";
 import { OPEN_CLINIC } from "./clinic-entry";
+import { OPEN_TESTIMONIALS } from "./testimonials-experience";
+import { TESTIMONIALS_ON } from "@/lib/testimonials";
+
+/* Depoimentos não é uma âncora: abre a experiência própria por cima do site */
+const openTestimonials = (e: React.MouseEvent<HTMLButtonElement>) => window.dispatchEvent(new CustomEvent(OPEN_TESTIMONIALS, { detail: e.currentTarget }));
 
 const NAV = [
   { href: "#sobre", label: "Sobre" },
@@ -29,7 +34,18 @@ export function Header() {
               {n.label}
             </a>
           ))}
+          {TESTIMONIALS_ON ? (
+            <button type="button" onClick={openTestimonials} className="eyebrow py-3 text-bone/70 transition-colors hover:text-gold-light">
+              Depoimentos
+            </button>
+          ) : null}
         </nav>
+        <div className="flex items-center gap-4">
+        {TESTIMONIALS_ON ? (
+          <button type="button" onClick={openTestimonials} className="eyebrow min-h-11 text-bone/75 transition-colors hover:text-gold-light md:hidden">
+            Depoimentos
+          </button>
+        ) : null}
         <Magnetic>
           <a
             href="#agendar"
@@ -42,6 +58,7 @@ export function Header() {
             Agendar
           </a>
         </Magnetic>
+        </div>
       </div>
     </header>
   );
