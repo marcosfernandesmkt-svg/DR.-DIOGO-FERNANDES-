@@ -42,10 +42,10 @@ function Chars({ text }: { text: string }) {
 function Name({ outline = false }: { outline?: boolean }) {
   return (
     <>
-      <span className={`block text-[clamp(1.6rem,min(5.4vw,11svh),5.5rem)] leading-none portrait:text-[12vw] ${outline ? "name-outline" : ""}`}>
+      <span className={`block text-[clamp(1.6rem,min(5.4vw,11svh),5.5rem)] leading-none portrait:text-[12vw] short:text-[9svh] ${outline ? "name-outline" : ""}`}>
         <Chars text="Dr. Diogo" />
       </span>
-      <span className={`block text-[min(14.8vw,30svh)] leading-[.92] whitespace-nowrap portrait:text-[14.6vw] ${outline ? "name-outline" : ""}`}>
+      <span className={`block text-[min(14.8vw,30svh)] leading-[.92] whitespace-nowrap portrait:text-[14.6vw] short:text-[22svh] ${outline ? "name-outline" : ""}`}>
         <Chars text="Fernandes" />
       </span>
     </>
@@ -164,7 +164,7 @@ export function ScrollLockedVideoHero({ videoSrc, skipTo }: Props) {
         <HeroCells />
 
         {/* Nome atrás da figura */}
-        <h1 aria-label={`${SITE.name}, ${SITE.role}, ${SITE.crm}`} className="hero-name rm-raise brand gutter absolute inset-x-0 bottom-[calc(max(17svh,6.75rem)+5rem)] text-bone portrait:opacity-0">
+        <h1 aria-label={`${SITE.name}, ${SITE.role}, ${SITE.crm}`} className="hero-name rm-raise brand gutter absolute inset-x-0 bottom-[calc(max(17svh,6.75rem)+5rem)] short:bottom-[40svh] text-bone portrait:opacity-0">
           <span aria-hidden className="block">
             <span className="name-a block"><Name /></span>
           </span>
@@ -195,7 +195,7 @@ export function ScrollLockedVideoHero({ videoSrc, skipTo }: Props) {
         </div>
 
         {/* Contorno à frente da figura: profundidade sem perder a leitura do nome */}
-        <div aria-hidden className="rm-raise brand gutter pointer-events-none absolute inset-x-0 bottom-[calc(max(17svh,6.75rem)+5rem)] portrait:bottom-[calc(20rem+1svh)] [@media(orientation:portrait)_and_(max-height:700px)]:bottom-[15.5rem]">
+        <div aria-hidden className="rm-raise brand gutter pointer-events-none absolute inset-x-0 bottom-[calc(max(17svh,6.75rem)+5rem)] short:bottom-[40svh] portrait:bottom-[calc(20rem+1svh)] [@media(orientation:portrait)_and_(max-height:700px)]:bottom-[15.5rem]">
           <span className="name-b block"><Name outline /></span>
         </div>
 

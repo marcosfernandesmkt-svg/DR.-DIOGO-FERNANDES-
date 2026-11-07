@@ -98,14 +98,14 @@ export function Portrait() {
             <span className="block overflow-hidden pb-[.04em]"><span className="pt-name block">Dr. Diogo</span></span>
             <span className="block overflow-hidden pb-[.04em]"><span className="pt-name block">Fernandes</span></span>
           </h2>
-          <Details className="pt-text mt-8 portrait:hidden" />
+          <Details className="pt-text mt-8 portrait:hidden short:hidden" />
         </div>
 
         {/* Camada que cobre o retrato e já tem o preto da seção seguinte */}
         <div className="pt-cover hero-hidden-rm invisible absolute inset-0 z-10 flex items-center bg-ink">
           <span aria-hidden className="pt-band absolute inset-x-0 top-0 h-px origin-left bg-linear-to-r from-gold via-gold-light to-transparent" />
           {/* No celular, as informações chegam na própria cobertura: nada de tela vazia */}
-          <Details className="gutter landscape:hidden" />
+          <Details className="gutter landscape:hidden short:block" />
         </div>
       </div>
 

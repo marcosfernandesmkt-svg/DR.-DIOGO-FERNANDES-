@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Celular deitado: pouca altura, então nome e textos se reorganizam para não ficarem sob o menu */
+@custom-variant short (@media (orientation: landscape) and (max-height: 500px));
 
 @theme {
   --color-ink: #080808;
@@ -79,6 +81,8 @@ html:not(.js) .rm-raise { translate: 0 -4.5rem; }
   .portrait-stage { position: sticky; top: 0; }
 }
 .portrait-stage { height: 100svh; min-height: 34rem; overflow: hidden; contain: paint; }
+/* Celular deitado: a cena cabe na tela, senão o nome do retrato fica abaixo da dobra */
+@media (orientation: landscape) and (max-height: 500px) { .portrait-stage { min-height: 0; } }
 
 .glyph-stage { min-height: 100svh; overflow: hidden; contain: paint; }
 /* Etapas: dentro da cena em telas largas; abaixo dela em telas estreitas ou baixas. */
