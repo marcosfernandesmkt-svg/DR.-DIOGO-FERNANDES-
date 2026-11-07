@@ -19,10 +19,16 @@ export const PHOTOS = {
 } as const;
 
 export const AREAS = [
-  { n: "01", title: "Controle de peso e obesidade", text: "Avaliação dos fatores relacionados ao peso e à saúde metabólica." },
-  { n: "02", title: "Resistência à insulina", text: "Investigação e acompanhamento do metabolismo da glicose e da insulina." },
-  { n: "03", title: "Diabetes", text: "Acompanhamento médico direcionado à saúde metabólica individual." },
-  { n: "04", title: "Tireoide", text: "Avaliação e acompanhamento de alterações do funcionamento da tireoide." },
+  { n: "01", title: "Saúde hormonal e metabólica", text: "Avaliação individualizada das alterações hormonais e de seus impactos na saúde e no bem-estar." },
+  { n: "02", title: "Emagrecimento e tratamento da obesidade", text: "Acompanhamento médico para perda de peso sustentável, preservação muscular e manutenção dos resultados." },
+  { n: "03", title: "Diabetes e resistência à insulina", text: "Prevenção, diagnóstico e tratamento das alterações da glicose, com foco na saúde a longo prazo." },
+  { n: "04", title: "Tireoide: funcionamento e nódulos", text: "Investigação e acompanhamento de hipotireoidismo, hipertireoidismo, tireoidites e nódulos." },
+  { n: "05", title: "Menopausa e saúde da mulher", text: "Cuidado com os sintomas da menopausa, alterações menstruais e síndrome dos ovários policísticos." },
+  { n: "06", title: "Saúde hormonal masculina e libido", text: "Investigação de baixa testosterona, alterações da libido e sintomas relacionados à deficiência hormonal." },
+  { n: "07", title: "Nutrição, vitaminas e disposição", text: "Avaliação de deficiências nutricionais e de fatores associados ao cansaço, com suplementação quando indicada." },
+  { n: "08", title: "Composição corporal e saúde muscular", text: "Avaliação de gordura corporal e massa muscular, com foco em força, funcionalidade e envelhecimento saudável." },
+  { n: "09", title: "Colesterol, triglicerídeos e gordura no fígado", text: "Cuidado das alterações metabólicas que afetam a saúde cardiovascular e hepática." },
+  { n: "10", title: "Osteoporose e saúde óssea", text: "Prevenção e acompanhamento da perda óssea, com avaliação do metabolismo do cálcio e da vitamina D." },
 ] as const;
 
 /**

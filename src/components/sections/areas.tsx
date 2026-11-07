@@ -45,25 +45,26 @@ export function Areas() {
           </Fade>
         </div>
 
-        <ol className="mt-16 md:mt-24">
+        {/* Dez áreas em duas colunas no computador: cada uma com respiro, sem virar uma lista longa */}
+        <ol className="mt-14 grid md:mt-20 lg:grid-cols-2 lg:gap-x-16 xl:gap-x-24">
           {AREAS.map((a) => (
             <li key={a.n} className="row relative isolate">
               <Rule className="bg-gold/25!" />
               <span aria-hidden className="band -z-10" />
               <motion.div
-                className="grid grid-cols-[3.25rem_1fr] gap-x-4 gap-y-3 py-9 md:grid-cols-12 md:items-center md:gap-x-8 md:py-12"
+                className="grid grid-cols-[3rem_1fr] gap-x-4 gap-y-3 py-8 md:grid-cols-[4.5rem_1fr] md:gap-x-6 md:py-10"
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "0px 0px -8% 0px" }}
                 transition={{ duration: 0.6, ease: EASE }}
               >
-                <p aria-hidden className="display slide text-[clamp(1.625rem,3vw,3.25rem)] leading-none text-gold md:col-span-1">{a.n}</p>
-                <h3 className="display slide tint text-[clamp(1.5rem,3.1vw,3.25rem)] leading-[1.1] text-bone md:col-span-6">{a.title}</h3>
-                <p className="slide col-start-2 max-w-[42ch] leading-[1.65] text-bone/68 md:col-span-5 md:col-start-8">{a.text}</p>
+                <p aria-hidden className="display slide text-[clamp(1.5rem,2.4vw,2.5rem)] leading-none text-gold md:row-span-2">{a.n}</p>
+                <h3 className="display slide tint text-balance text-[clamp(1.375rem,2.1vw,2.125rem)] leading-[1.15] text-bone">{a.title}</h3>
+                <p className="slide col-start-2 max-w-[46ch] text-[.9375rem] leading-[1.7] text-bone/68 md:text-base">{a.text}</p>
               </motion.div>
             </li>
           ))}
-          <li aria-hidden><Rule className="bg-gold/25!" /></li>
+          <li aria-hidden className="lg:col-span-2"><Rule className="bg-gold/25!" /></li>
         </ol>
       </div>
     </section>
