@@ -24,6 +24,8 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     }
 
     const onClick = (e: MouseEvent) => {
+      // Um link que já tratou o próprio clique (o "Agendar" do topo abre a clínica) não rola a página
+      if (e.defaultPrevented) return;
       const link = (e.target as Element).closest?.<HTMLAnchorElement>('a[href^="#"]');
       const hash = link?.getAttribute("href");
       if (!hash || hash === "#") return;

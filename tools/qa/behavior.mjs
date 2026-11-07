@@ -141,7 +141,15 @@ const gotoBooking = async (p) => {
   ok((await p.locator('[role="dialog"]').count()) === 0, "Esc fecha a clínica virtual");
   ok(await p.evaluate(() => document.activeElement?.textContent?.includes("Marque seu atendimento")), "foco volta ao botão");
   ok(await p.evaluate(() => !document.body.style.overflow && !document.documentElement.style.overflow), "experiência não bloqueia a página");
-  await p.locator('header a[href="#agendar"]').last().click();
+  // O "Agendar" do topo abre a mesma clínica virtual do "Marque seu atendimento"
+  await p.locator("header a", { hasText: /^agendar$/i }).click();
+  await p.waitForTimeout(900);
+  ok((await p.locator('[role="dialog"]').count()) === 1, "Agendar do topo abre a clínica virtual");
+  await p.keyboard.press("Escape");
+  await p.waitForTimeout(400);
+  ok(await p.evaluate(() => document.activeElement?.textContent?.trim() === "Agendar"), "foco volta ao Agendar do topo");
+  // A cortina continua no link "Clínicas" do menu
+  await p.evaluate(() => document.querySelector('header nav a[href="#agendar"]').click());
   await p.waitForTimeout(450);
   const mid = await p.$eval(".curtain", (e) => getComputedStyle(e).visibility);
   await p.waitForTimeout(1400);

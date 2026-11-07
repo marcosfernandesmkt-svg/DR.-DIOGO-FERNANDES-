@@ -3,6 +3,7 @@
 import { motion, useScroll, useSpring } from "motion/react";
 import { Monogram } from "./monogram";
 import { Magnetic } from "./magnetic";
+import { OPEN_CLINIC } from "./clinic-entry";
 
 const NAV = [
   { href: "#sobre", label: "Sobre" },
@@ -30,7 +31,14 @@ export function Header() {
           ))}
         </nav>
         <Magnetic>
-          <a href="#agendar" className="eyebrow flex min-h-11 items-center rounded-full border border-gold/60 bg-ink/40 px-5 text-gold-light backdrop-blur-sm transition-colors hover:bg-gold hover:text-ink">
+          <a
+            href="#agendar"
+            onClick={(e) => {
+              // Mesmo destino do "Marque seu atendimento"; sem JavaScript, o link leva às clínicas
+              e.preventDefault();
+              window.dispatchEvent(new CustomEvent(OPEN_CLINIC, { detail: e.currentTarget }));
+            }}
+            className="eyebrow flex min-h-11 items-center rounded-full border border-gold/60 bg-ink/40 px-5 text-gold-light backdrop-blur-sm transition-colors hover:bg-gold hover:text-ink">
             Agendar
           </a>
         </Magnetic>

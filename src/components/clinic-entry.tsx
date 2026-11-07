@@ -15,14 +15,29 @@ import { Monogram } from "./monogram";
 
 type Stage = "welcome" | "doors" | "inside";
 
+/** Outros botões (o "Agendar" do topo) pedem a mesma experiência por este evento. */
+export const OPEN_CLINIC = "open-clinic";
+
 /** Botão da abertura e a experiência opcional da clínica virtual. */
 export function ClinicEntry() {
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
 
+  // Ao fechar, o foco volta para o botão que abriu: o da abertura ou o do topo
+  const returnTo = useRef<HTMLElement | null>(null);
   const close = useCallback(() => {
     setOpen(false);
-    trigger.current?.focus({ preventScroll: true });
+    (returnTo.current ?? trigger.current)?.focus({ preventScroll: true });
+    returnTo.current = null;
+  }, []);
+
+  useEffect(() => {
+    const onOpen = (e: Event) => {
+      returnTo.current = (e as CustomEvent<HTMLElement | null>).detail ?? null;
+      setOpen(true);
+    };
+    window.addEventListener(OPEN_CLINIC, onOpen);
+    return () => window.removeEventListener(OPEN_CLINIC, onOpen);
   }, []);
 
   return (
@@ -34,9 +49,12 @@ export function ClinicEntry() {
           type="button"
           onClick={() => setOpen(true)}
           whileTap={{ scale: 0.985 }}
-          className="group relative isolate flex h-[46px] w-fit items-center gap-2.5 overflow-hidden rounded-[3px] border border-gold/45 bg-ink/55 px-5 text-xs font-medium uppercase tracking-[.15em] text-gold-light transition-[border-color,background-color,color] duration-500 ease-cine hover:border-gold hover:bg-[#15130f] hover:text-gold-light"
+          className="group relative isolate flex h-[46px] w-fit items-center gap-2.5 overflow-hidden rounded-[3px] border border-gold-light/70 bg-[linear-gradient(135deg,#efe0b8_0%,#d9bd82_38%,#c6a667_62%,#a9874a_100%)] px-5 text-xs font-semibold uppercase tracking-[.15em] text-ink shadow-[inset_0_1px_0_rgb(255_255_255/.45),inset_0_-1px_0_rgb(80_60_20/.35),0_10px_30px_-12px_rgb(198_166_103/.7)] transition-[filter,box-shadow] duration-500 ease-cine hover:brightness-[1.06] hover:shadow-[inset_0_1px_0_rgb(255_255_255/.55),inset_0_-1px_0_rgb(80_60_20/.35),0_14px_36px_-12px_rgb(228_209_165/.85)] focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-gold-light"
         >
-          <span aria-hidden className="absolute inset-y-0 left-0 -z-10 w-1/2 -translate-x-full bg-linear-to-r from-transparent via-gold/14 to-transparent transition-transform duration-[900ms] ease-cine group-hover:translate-x-[220%]" />
+          {/* Reflexo metálico que atravessa o dourado ao passar o mouse */}
+          <span aria-hidden className="absolute inset-y-0 left-0 -z-10 w-1/2 -translate-x-full skew-x-[-18deg] bg-linear-to-r from-transparent via-white/45 to-transparent transition-transform duration-[900ms] ease-cine group-hover:translate-x-[260%]" />
+          {/* Filete interno: acabamento de joia, como o monograma */}
+          <span aria-hidden className="pointer-events-none absolute inset-[3px] -z-10 rounded-[1px] border border-[#8a6c35]/25" />
           Marque seu atendimento
           <ArrowRight className="size-3.5 transition-transform duration-500 ease-cine group-hover:translate-x-[3px]" strokeWidth={1.5} aria-hidden />
         </motion.button>
