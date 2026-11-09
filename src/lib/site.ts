@@ -30,6 +30,9 @@ export const AREAS = [
   { n: "08", title: "Composição corporal e saúde muscular", text: "Avaliação de gordura corporal e massa muscular, com foco em força, funcionalidade e envelhecimento saudável." },
   { n: "09", title: "Colesterol, triglicerídeos e gordura no fígado", text: "Cuidado das alterações metabólicas que afetam a saúde cardiovascular e hepática." },
   { n: "10", title: "Osteoporose e saúde óssea", text: "Prevenção e acompanhamento da perda óssea, com avaliação do metabolismo do cálcio e da vitamina D." },
+  { n: "11", title: "Lipedema", text: "Avaliação e acompanhamento clínico, com atenção à saúde metabólica, ao cuidado nutricional e à qualidade de vida." },
+  { n: "12", title: "Síndrome dos ovários policísticos (SOP)", text: "Cuidado das alterações hormonais e metabólicas, com atenção ao ciclo menstrual, à resistência à insulina e ao controle do peso." },
+  { n: "13", title: "Endometriose e adenomiose", text: "Acompanhamento da saúde metabólica e nutricional, em conjunto com o cuidado ginecológico, com foco no bem-estar e na qualidade de vida." },
 ] as const;
 
 /**
@@ -41,16 +44,6 @@ export const FORMATION = [
   { label: "Pós-graduação", title: "Endocrinologia", place: "Academia Brasileira de Medicina Funcional Integrativa (ABMFI)", status: "done", notSpecialist: true },
   { label: "Formação em andamento", title: "Pós-graduando em Nutrologia", place: "Afya Educação Médica", status: "ongoing", notSpecialist: true },
   { label: "Membro", title: "Academia Brasileira de Medicina Funcional Integrativa (ABMFI)", status: "member" },
-] as const;
-
-export const CARE_TOPICS = [
-  "Obesidade e controle de peso",
-  "Sarcopenia",
-  "Doenças da tireoide",
-  "Lipedema",
-  "Diabetes",
-  "Resistência à insulina",
-  "Demais doenças endócrinas e metabólicas",
 ] as const;
 
 export const STEPS = [

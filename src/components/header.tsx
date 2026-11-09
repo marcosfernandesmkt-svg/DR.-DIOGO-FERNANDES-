@@ -22,7 +22,8 @@ export function Header() {
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-40">
-      <span aria-hidden className="absolute inset-x-0 top-0 -z-10 h-24 bg-linear-to-b from-ink via-ink/80 to-transparent" />
+      {/* Faixa escura atrás do menu: o texto que passa por baixo não aparece atrás do logo e do Agendar */}
+      <span aria-hidden className="absolute inset-x-0 top-0 -z-10 h-28 bg-linear-to-b from-ink from-45% via-ink/90 via-70% to-transparent" />
       <motion.span aria-hidden style={{ scaleX }} className="block h-px origin-left bg-linear-to-r from-gold via-gold to-ice" />
       <div data-intro className="gutter pointer-events-auto flex items-center justify-between pt-[max(.875rem,env(safe-area-inset-top))] mix-blend-normal">
         <a href="#topo" aria-label="Dr. Diogo Fernandes — início" className="-m-2 grid size-14 place-items-center text-gold transition-colors hover:text-gold-light">

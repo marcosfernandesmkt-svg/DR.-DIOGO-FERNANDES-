@@ -2,9 +2,9 @@
 
 import { useRef } from "react";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
-import { CARE_TOPICS, FORMATION, SITE } from "@/lib/site";
+import { FORMATION, SITE } from "@/lib/site";
 
-/** Título, apresentação curta, formação e atendimento: uma leitura editorial, sem cards. */
+/** Título, apresentação curta e formação: uma leitura editorial, sem cards. */
 export function Philosophy() {
   const scope = useRef<HTMLElement>(null);
 
@@ -37,7 +37,7 @@ export function Philosophy() {
   );
 
   return (
-    <section ref={scope} id="sobre" tabIndex={-1} className="after-portrait gutter relative z-[2] flex min-h-svh flex-col gap-12 pb-16 pt-[clamp(7rem,16svh,9rem)] outline-none md:gap-16 md:pb-24">
+    <section ref={scope} id="sobre" tabIndex={-1} className="after-portrait gutter relative z-[2] flex min-h-svh flex-col gap-12 pb-16 pt-[clamp(7rem,16svh,9rem)] outline-none portrait:pt-[5.5rem] md:gap-16 md:pb-24">
       <p className="ph-eyebrow eyebrow text-gold">02 / Nossa filosofia</p>
 
       {/* 1. Título */}
@@ -49,17 +49,17 @@ export function Philosophy() {
       {/* 2. Apresentação */}
       <div className="ph-c grid gap-6 md:grid-cols-12">
         <p className="max-w-[48ch] text-[clamp(1.0625rem,1.3vw,1.25rem)] leading-[1.65] text-bone/80 md:col-span-7 md:col-start-6">
-          O <span className="brand brand-inline">{SITE.name}</span> atua na saúde hormonal e metabólica, valorizando a escuta, a avaliação clínica individualizada e uma visão integral da saúde de cada paciente.
+          Cada pessoa traz uma história que merece ser ouvida. Por isso, o <span className="brand brand-inline">{SITE.name}</span> busca compreender o que vai além dos sintomas: a rotina, os desafios e o que importa para você. Um cuidado construído com escuta, atenção e respeito à sua individualidade.
         </p>
-        <p className="text-xs uppercase leading-relaxed tracking-[.16em] text-ash md:col-span-7 md:col-start-6">
-          <span className="brand text-[1.2em] tracking-normal text-bone">{SITE.name}</span>
-          <span aria-hidden className="mx-2 text-gold/60">|</span>
+        <p className="flex flex-wrap items-baseline gap-x-2 text-xs uppercase leading-relaxed tracking-[.16em] text-ash md:col-span-7 md:col-start-6">
+          <span className="brand whitespace-nowrap text-[1.2em] tracking-normal text-bone">{SITE.name}</span>
+          <span aria-hidden className="text-gold/60">|</span>
           <span className="whitespace-nowrap">{SITE.role} — {SITE.crm}</span>
         </p>
       </div>
 
       {/* 3. Formação médica */}
-      <div className="ph-group grid gap-6 md:grid-cols-12">
+      <div className="ph-group ph-leave grid gap-6 md:grid-cols-12">
         <h3 className="ph-item eyebrow text-gold md:col-span-4">Formação médica</h3>
         <dl className="md:col-span-8">
           {FORMATION.map((f) => (
@@ -79,21 +79,6 @@ export function Philosophy() {
         </dl>
       </div>
 
-      {/* 4. Atendimento */}
-      <div className="ph-group ph-leave grid gap-6 md:grid-cols-12">
-        <h3 className="ph-item eyebrow text-gold md:col-span-4">Saúde hormonal e metabólica</h3>
-        <ul className="grid sm:grid-cols-2 md:col-span-8 md:gap-x-10">
-          {CARE_TOPICS.map((t) => (
-            <li key={t} className="relative py-3.5">
-              <span aria-hidden className="ph-line absolute inset-x-0 top-0 h-px origin-left bg-gold/20" />
-              <span className="ph-item flex items-baseline gap-3 text-[.9375rem] leading-snug text-bone/85">
-                <span aria-hidden className="size-1 shrink-0 translate-y-[-.2em] rounded-full bg-gold/70" />
-                {t}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
     </section>
   );
 }

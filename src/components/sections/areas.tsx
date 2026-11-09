@@ -19,6 +19,10 @@ export function Areas() {
         gsap.to(document.querySelector(".gp-content"), { opacity: 0.18, ease: "none", scrollTrigger: arrive });
         gsap.fromTo(".ed-line", { scaleX: 0 }, { scaleX: 1, ease: "power2.inOut", scrollTrigger: arrive });
         gsap.fromTo(".ed-glint", { xPercent: -100, opacity: 0 }, { xPercent: 1000, opacity: 1, ease: "none", scrollTrigger: { ...arrive, start: "top 72%", end: "top 30%" } });
+        // Cada filete dourado se desenha quando a área entra na tela
+        for (const mark of gsap.utils.toArray<HTMLElement>(".ar-mark", scope.current)) {
+          gsap.fromTo(mark, { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: mark, start: "top 90%", once: true } });
+        }
         gsap.fromTo(".ar-title", { yPercent: 112 }, { yPercent: 0, duration: 0.95, ease: "expo.out", scrollTrigger: { trigger: scope.current, start: "top 62%", once: true } });
       });
       return () => mm.revert();
@@ -46,26 +50,27 @@ export function Areas() {
         </div>
 
         {/* Dez áreas em duas colunas no computador: cada uma com respiro, sem virar uma lista longa */}
-        <ol className="mt-14 grid md:mt-20 lg:grid-cols-2 lg:gap-x-16 xl:gap-x-24">
+        <ul className="mt-14 grid md:mt-20 lg:grid-cols-2 lg:gap-x-16 xl:gap-x-24">
           {AREAS.map((a) => (
-            <li key={a.n} className="row relative isolate">
+            <li key={a.n} className="row group relative isolate">
               <Rule className="bg-gold/25!" />
               <span aria-hidden className="band -z-10" />
               <motion.div
-                className="grid grid-cols-[3rem_1fr] gap-x-4 gap-y-3 py-8 md:grid-cols-[4.5rem_1fr] md:gap-x-6 md:py-10"
+                className="grid gap-y-3 py-8 md:py-10"
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "0px 0px -8% 0px" }}
                 transition={{ duration: 0.6, ease: EASE }}
               >
-                <p aria-hidden className="display slide text-[clamp(1.5rem,2.4vw,2.5rem)] leading-none text-gold md:row-span-2">{a.n}</p>
+                {/* No lugar do número, um filete dourado que se desenha ao entrar e se estende ao passar o mouse */}
+                <span aria-hidden className="ar-mark slide block h-px w-8 origin-left bg-linear-to-r from-gold to-gold/0 transition-[width] duration-700 ease-cine group-hover:w-16" />
                 <h3 className="display slide tint text-balance text-[clamp(1.375rem,2.1vw,2.125rem)] leading-[1.15] text-bone">{a.title}</h3>
-                <p className="slide col-start-2 max-w-[46ch] text-[.9375rem] leading-[1.7] text-bone/68 md:text-base">{a.text}</p>
+                <p className="slide max-w-[46ch] text-[.9375rem] leading-[1.7] text-bone/68 md:text-base">{a.text}</p>
               </motion.div>
             </li>
           ))}
           <li aria-hidden className="lg:col-span-2"><Rule className="bg-gold/25!" /></li>
-        </ol>
+        </ul>
       </div>
     </section>
   );

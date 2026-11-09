@@ -8,7 +8,7 @@ function Heading() {
     <div className="gutter">
       <p className="gp-rise eyebrow text-gold">03 / Como funciona</p>
       <h2 className="gp-rise display mt-6 text-balance text-[clamp(2.25rem,5vw,5.25rem)] leading-[1.08] text-bone">Cuidado em cada etapa.</h2>
-      <p className="gp-rise mt-5 max-w-[46ch] text-[1.0625rem] leading-[1.6] text-bone/78">Uma abordagem individualizada, da primeira avaliação ao acompanhamento.</p>
+      <p className="gp-rise mt-5 max-w-[46ch] text-[1.0625rem] leading-[1.6] text-bone/78">Da primeira conversa ao acompanhamento, escuta e atenção para construir com você o caminho para uma vida com mais saúde e longevidade.</p>
     </div>
   );
 }

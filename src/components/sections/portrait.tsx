@@ -3,29 +3,11 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
-import { PHOTOS, SITE } from "@/lib/site";
+import { PHOTOS } from "@/lib/site";
 
-const BODY = "Presencial e on-line, quando aplicável, com acompanhamento individualizado e atenção à atualização científica.";
 
 /* Base e laterais se dissolvem: o terno nunca termina numa borda reta. */
 const PHOTO_MASK = "linear-gradient(to bottom, #000 72%, transparent 99%), linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%)";
-
-function Details({ className = "" }: { className?: string }) {
-  return (
-    <div className={className}>
-      <p className="max-w-[40ch] text-[1.0625rem] leading-[1.6] text-bone">
-        O <span className="brand brand-inline">{SITE.name}</span> atua com foco na saúde hormonal e metabólica, buscando compreender as necessidades individuais de cada paciente.
-      </p>
-      <p className="mt-4 max-w-[46ch] text-[.9375rem] leading-[1.7] text-bone/65">{BODY}</p>
-      <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-3 text-sm">
-        <div>
-          <dt className="text-xs uppercase tracking-[.16em] text-ash">Registro</dt>
-          <dd className="mt-1 text-bone">{SITE.crm}</dd>
-        </div>
-      </dl>
-    </div>
-  );
-}
 
 /** Retrato cinematográfico: apresenta o médico logo após a abertura. */
 export function Portrait() {
@@ -35,6 +17,8 @@ export function Portrait() {
     () => {
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
+        /* No celular a cobertura não traz mais texto: ela sobe mais tarde, sem deixar tela vazia */
+        const coverAt = matchMedia("(orientation: portrait)").matches ? 0.9 : 0.62;
         const previous = document.querySelector(".stage-depth");
 
         /* Dissolução: a frase sai enquanto o retrato já está entrando, sem preto no meio. */
@@ -52,12 +36,11 @@ export function Portrait() {
           .to(".pt-line", { opacity: 0, duration: 0.06 }, 0.2)
           .fromTo(".pt-eyebrow", { opacity: 0 }, { opacity: 1, duration: 0.05 }, 0.08)
           .fromTo(".pt-name", { yPercent: 104 }, { yPercent: 0, duration: 0.11, ease: "power3.out", stagger: 0.03 }, 0.08)
-          .fromTo(".pt-text", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.08 }, 0.15)
 
           /* Editorial Layer: o retrato recua e a cobertura sobe trazendo a Filosofia. */
           .to(".pt-frame", { scale: 0.94, duration: 0.2, ease: "power1.inOut" }, 0.6)
-          .fromTo(".pt-cover", { yPercent: 100, autoAlpha: 1 }, { yPercent: 0, autoAlpha: 1, duration: 0.2, ease: "power2.inOut" }, 0.62)
-          .fromTo(".pt-band", { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out" }, 0.64);
+          .fromTo(".pt-cover", { yPercent: 100, autoAlpha: 1 }, { yPercent: 0, autoAlpha: 1, duration: 0.1, ease: "power2.inOut" }, coverAt)
+          .fromTo(".pt-band", { scaleX: 0 }, { scaleX: 1, duration: 0.08, ease: "power2.out" }, coverAt + 0.02);
       });
       return () => mm.revert();
     },
@@ -98,21 +81,14 @@ export function Portrait() {
             <span className="block overflow-hidden pb-[.04em]"><span className="pt-name block">Dr. Diogo</span></span>
             <span className="block overflow-hidden pb-[.04em]"><span className="pt-name block">Fernandes</span></span>
           </h2>
-          <Details className="pt-text mt-8 portrait:hidden short:hidden" />
         </div>
 
         {/* Camada que cobre o retrato e já tem o preto da seção seguinte */}
         <div className="pt-cover hero-hidden-rm invisible absolute inset-0 z-10 flex items-center bg-ink">
           <span aria-hidden className="pt-band absolute inset-x-0 top-0 h-px origin-left bg-linear-to-r from-gold via-gold-light to-transparent" />
-          {/* No celular, as informações chegam na própria cobertura: nada de tela vazia */}
-          <Details className="gutter landscape:hidden short:block" />
         </div>
       </div>
 
-      {/* Sem animação, as informações do celular ficam em fluxo normal */}
-      <div className="rm-portrait gutter bg-ink py-14">
-        <Details />
-      </div>
     </section>
   );
 }
