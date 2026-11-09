@@ -49,13 +49,13 @@ export function ClinicEntry() {
           type="button"
           onClick={() => setOpen(true)}
           whileTap={{ scale: 0.985 }}
-          className="btn-gold group relative isolate flex h-[46px] w-fit items-center gap-3 overflow-hidden rounded-[3px] pl-5 pr-1.5 text-xs font-semibold uppercase tracking-[.15em] text-ink focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-gold-light"
+          className="btn-gold group relative isolate flex h-[46px] w-fit items-center gap-2.5 overflow-hidden rounded-[3px] px-5 text-xs font-semibold uppercase tracking-[.15em] text-ink focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-gold-light"
         >
           {/* Filete interno: acabamento de joia, como o monograma */}
           <span aria-hidden className="pointer-events-none absolute inset-[3px] -z-10 rounded-[1px] border border-[#8a6c35]/25" />
           Marque seu atendimento
-          {/* Seta em uma pastilha escura: ao passar o mouse, uma seta sai e outra entra */}
-          <span aria-hidden className="relative grid size-[34px] place-items-center overflow-hidden rounded-[2px] bg-ink/90 text-gold-light shadow-[inset_0_0_0_1px_rgb(228_209_165/.18)]">
+          {/* Só a seta: ao passar o mouse, uma sai e outra entra */}
+          <span aria-hidden className="relative grid size-4 place-items-center overflow-hidden">
             <ArrowRight className="size-3.5 transition-transform duration-500 ease-cine group-hover:translate-x-[180%]" strokeWidth={1.5} />
             <ArrowRight className="absolute size-3.5 -translate-x-[180%] transition-transform duration-500 ease-cine group-hover:translate-x-0" strokeWidth={1.5} />
           </span>
