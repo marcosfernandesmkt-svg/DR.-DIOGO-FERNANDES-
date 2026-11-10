@@ -33,6 +33,7 @@ export const AREAS = [
   { n: "11", title: "Lipedema", text: "Avaliação e acompanhamento clínico, com atenção à saúde metabólica, ao cuidado nutricional e à qualidade de vida." },
   { n: "12", title: "Síndrome dos ovários policísticos (SOP)", text: "Cuidado das alterações hormonais e metabólicas, com atenção ao ciclo menstrual, à resistência à insulina e ao controle do peso." },
   { n: "13", title: "Endometriose e adenomiose", text: "Acompanhamento da saúde metabólica e nutricional, em conjunto com o cuidado ginecológico, com foco no bem-estar e na qualidade de vida." },
+  { n: "14", title: "Sarcopenia e saúde muscular", text: "Avaliação da saúde muscular, da perda de massa e força muscular e de fatores metabólicos relacionados, com atenção individualizada." },
 ] as const;
 
 /**
