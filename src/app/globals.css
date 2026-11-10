@@ -171,3 +171,40 @@ html:not(.js) .rm-raise { translate: 0 -4.5rem; }
 @keyframes gold-sheen { 0% { transform: translateX(-130%) skewX(-18deg); } 22%, 100% { transform: translateX(330%) skewX(-18deg); } }
 @keyframes gold-breathe { 0%, 100% { box-shadow: 0 0 0 0 rgb(228 209 165 / 0); } 50% { box-shadow: 0 0 22px 2px rgb(198 166 103 / .28); } }
 @media (prefers-reduced-motion: reduce) { .btn-gold::before, .btn-gold::after { animation: none; } .btn-gold:hover { transform: none; } }
+
+/* ---------- Depoimentos: marquee vertical em perspectiva 3D ---------- */
+.marquee { --duration: 64s; --gap: 1.25rem; }
+.marquee-y { animation: marquee-y var(--duration) linear infinite; will-change: transform; }
+.marquee-x { animation: marquee-x var(--duration) linear infinite; will-change: transform; }
+.marquee-reverse { animation-direction: reverse; }
+@keyframes marquee-y { from { transform: translateY(0); } to { transform: translateY(calc(-100% - var(--gap))); } }
+@keyframes marquee-x { from { transform: translateX(0); } to { transform: translateX(calc(-100% - var(--gap))); } }
+/* Pausa no hover, no foco, ao abrir um depoimento, pelo botão e antes da entrada terminar */
+.marquee-pausable:hover .marquee-track, .marquee-pausable:focus-within .marquee-track,
+.t3d:is([data-live="false"], [data-paused="true"]) .marquee-track, .t3d-stage:has(:focus-visible) .marquee-track { animation-play-state: paused; }
+/* Em perspectiva, a caixa de uma coluna invade a vizinha: só os cards recebem o clique */
+.t3d-plane, .t3d-plane > div, .t3d-col { pointer-events: none; }
+.t3d-col article { pointer-events: auto; }
+/* No computador, o mouse sobre o painel para todas as colunas: a leitura não escapa */
+@media (hover: hover) { .t3d-stage:hover .marquee-track { animation-play-state: paused; } }
+/* Painel: perspectiva curta (o conceito do original) com ângulos que mantêm a leitura */
+.t3d-persp { perspective: 300px; perspective-origin: 50% 40%; }
+.t3d-plane { transform-style: preserve-3d; transform: translateX(-1%) translateZ(-30px) rotateX(7deg) rotateY(-3deg) rotateZ(6deg); }
+/* Bordas: as colunas se dissolvem no próprio fundo (máscara), sem faixas de outra cor */
+.t3d-edges {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--edge-top, 20%), #000 var(--edge-bot, 76%), transparent), linear-gradient(to right, transparent, #000 var(--edge-x, 9%), #000 calc(100% - var(--edge-x, 9%)), transparent);
+  -webkit-mask-composite: source-in; mask-image: linear-gradient(to bottom, transparent, #000 var(--edge-top, 20%), #000 var(--edge-bot, 76%), transparent), linear-gradient(to right, transparent, #000 var(--edge-x, 9%), #000 calc(100% - var(--edge-x, 9%)), transparent);
+  mask-composite: intersect;
+}
+@media (max-width: 767px) {
+  .t3d-persp { perspective: 520px; }
+  .t3d-plane { transform: translateZ(-16px) rotateX(4deg) rotateY(0deg) rotateZ(3.5deg); }
+  .marquee { --gap: .75rem; }
+  .t3d-edges { --edge-x: 3%; }
+}
+/* Sem movimento: leitura estática, sem cópias nem perspectiva */
+.t3d-static { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .t3d-motion { display: none; }
+  .t3d-static { display: grid; }
+}

@@ -2,7 +2,7 @@
 import { chromium } from "playwright-core";
 import { mkdir } from "node:fs/promises";
 
-const base = "http://localhost:3140";
+const base = process.env.BASE ?? "http://localhost:3140";
 const out = new URL("./out/", import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 
