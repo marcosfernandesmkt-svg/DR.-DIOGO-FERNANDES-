@@ -196,6 +196,11 @@ export function HeroCells() {
       <div className="cells-depth absolute -inset-[3%]">
         <LivingCells hero />
       </div>
+      {/* Célula da esquerda: a mesma célula da imagem, espelhada, para equilibrar a composição */}
+      <div className="cell-left absolute left-[-2vw] top-[12svh] h-[76svh] portrait:left-[-18vw] portrait:top-[4svh] portrait:h-[38svh]" style={{ aspectRatio: "532 / 771" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element -- recorte espelhado da imagem fornecida */}
+        <img src="/media/celula-esquerda.webp" alt="" width={532} height={771} decoding="async" className="size-full object-cover" />
+      </div>
       {/* Luz ambiente nas áreas que já têm reflexo na imagem */}
       <div className="cells-light absolute inset-0 bg-[radial-gradient(26vmax_26vmax_at_88%_56%,rgb(198_166_103/.1),transparent_70%)] portrait:hidden" />
       <div className="cells-light alt absolute inset-0 bg-[radial-gradient(30vmax_24vmax_at_12%_12%,rgb(52_124_181/.1),transparent_70%)]" />

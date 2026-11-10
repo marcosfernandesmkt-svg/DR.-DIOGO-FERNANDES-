@@ -110,6 +110,19 @@ html:not(.js) .rm-raise { translate: 0 -4.5rem; }
   82% { opacity: .4; }
   100% { opacity: 0; transform: translate3d(1.5vw, -17vh, 0); }
 }
+/* Célula da esquerda: funde-se ao fundo (screen) e flutua devagar, com a membrana respirando */
+.cell-left {
+  mix-blend-mode: screen; opacity: .9; transform-origin: 30% 50%;
+  -webkit-mask-image: radial-gradient(70% 62% at 32% 52%, #000 55%, transparent 100%); mask-image: radial-gradient(70% 62% at 32% 52%, #000 55%, transparent 100%);
+  animation: cell-left 16s ease-in-out infinite alternate;
+}
+.cell-left img { animation: cell-left-breathe 7s ease-in-out infinite alternate; transform-origin: 30% 50%; }
+@keyframes cell-left {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(1.6vw, -2.2svh, 0) rotate(3deg); }
+  100% { transform: translate3d(-.8vw, 1.8svh, 0) rotate(-2deg); }
+}
+@keyframes cell-left-breathe { from { transform: scale(1); filter: brightness(1); } to { transform: scale(1.05); filter: brightness(1.18); } }
 /* Átomos atrás do médico: núcleo dourado, órbitas finas e elétrons em azul e ouro */
 .atom { position: absolute; pointer-events: none; animation: atom-drift var(--drift, 22s) ease-in-out infinite alternate; animation-delay: var(--lag, 0s); }
 .atom svg { width: 100%; height: 100%; overflow: visible; animation: atom-spin var(--spin, 28s) linear infinite; }
@@ -159,6 +172,7 @@ html:not(.js) .rm-raise { translate: 0 -4.5rem; }
   .cue-dot { animation: none; }
   .cells-camera, .cells-light, .mote { animation: none; }
   .mote, .atom { display: none; }
+  .cell-left, .cell-left img { animation: none; }
   *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
 
