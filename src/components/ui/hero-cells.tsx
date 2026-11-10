@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useId, useRef } from "react";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
 import { LivingCells } from "./living-cells";
 
@@ -23,7 +23,7 @@ const MOTES = [
 /* Átomos, moléculas e células em traço fino: tamanho em vmin, posição em %, ritmos diferentes
    para nunca andarem juntos. "wide" some no celular em pé, onde o espaço livre é menor. */
 type Kind = "atom" | "molecule" | "cell";
-const PARTICLES: { kind: Kind; x: number; y: number; size: number; drift: number; spin: number; lag: number; hue: "gold" | "ice"; wide?: boolean }[] = [
+const PARTICLES: { kind: Kind; x: number; y: number; size: number; drift: number; spin: number; lag: number; hue: Hue; wide?: boolean }[] = [
   { kind: "atom", x: 4, y: 13, size: 12, drift: 19, spin: 24, lag: -3, hue: "gold" },
   { kind: "molecule", x: 27, y: 7, size: 15, drift: 26, spin: 46, lag: -8, hue: "ice", wide: true },
   { kind: "cell", x: 43, y: 22, size: 13, drift: 23, spin: 60, lag: -14, hue: "gold", wide: true },
@@ -33,70 +33,124 @@ const PARTICLES: { kind: Kind; x: number; y: number; size: number; drift: number
   { kind: "atom", x: 60, y: 82, size: 9, drift: 18, spin: 19, lag: -7, hue: "gold", wide: true },
 ];
 
-const GOLD = "#c6a667", GOLD_LIGHT = "#e4d1a5", ICE = "#79b9e4";
+type Hue = "gold" | "ice";
 const ORBIT = "M-40,0 a40,13 0 1,0 80,0 a40,13 0 1,0 -80,0";
 
-function Atom({ hue }: { hue: "gold" | "ice" }) {
-  const ring = hue === "gold" ? GOLD : ICE;
-  const electron = hue === "gold" ? ICE : GOLD_LIGHT;
+/* Esferas com luz vinda do alto à esquerda: é o volume que faz as formas parecerem reais */
+function Defs({ id }: { id: string }) {
+  return (
+    <defs>
+      <radialGradient id={`${id}g`} cx="35%" cy="30%" r="75%">
+        <stop offset="0" stopColor="#fff8e6" />
+        <stop offset=".28" stopColor="#e4d1a5" />
+        <stop offset=".62" stopColor="#c6a667" />
+        <stop offset="1" stopColor="#4a3818" />
+      </radialGradient>
+      <radialGradient id={`${id}i`} cx="35%" cy="30%" r="75%">
+        <stop offset="0" stopColor="#eef8ff" />
+        <stop offset=".3" stopColor="#79b9e4" />
+        <stop offset=".68" stopColor="#347cb5" />
+        <stop offset="1" stopColor="#0b2038" />
+      </radialGradient>
+      <radialGradient id={`${id}h`}>
+        <stop offset="0" stopColor="#e4d1a5" stopOpacity=".45" />
+        <stop offset="1" stopColor="#e4d1a5" stopOpacity="0" />
+      </radialGradient>
+      <radialGradient id={`${id}m`} cx="50%" cy="50%" r="50%">
+        <stop offset=".55" stopColor="#79b9e4" stopOpacity=".02" />
+        <stop offset=".86" stopColor="#79b9e4" stopOpacity=".16" />
+        <stop offset="1" stopColor="#c6e3f7" stopOpacity=".42" />
+      </radialGradient>
+      <linearGradient id={`${id}b`} x1="0" x2="1">
+        <stop offset="0" stopColor="#8a7344" />
+        <stop offset=".5" stopColor="#e4d1a5" />
+        <stop offset="1" stopColor="#8a7344" />
+      </linearGradient>
+      <filter id={`${id}f`} x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="1.6" result="b" />
+        <feMerge>
+          <feMergeNode in="b" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+  );
+}
+
+function Atom({ hue }: { hue: Hue }) {
+  const id = useId().replace(/:/g, "");
+  const ring = hue === "gold" ? "#c6a667" : "#79b9e4";
+  // Núcleo: prótons e nêutrons agrupados
+  const nucleons = [[0, 0, "g"], [-3.6, -2, "i"], [3.4, -2.4, "g"], [-1.6, 3.6, "g"], [3, 2.6, "i"], [-4, 2, "g"], [0.6, -4.4, "i"]] as const;
   return (
     <svg viewBox="-50 -50 100 100">
-      <circle r="10" fill={GOLD} opacity=".22" />
-      <circle r="4.2" fill={GOLD_LIGHT} />
+      <Defs id={id} />
+      <circle r="16" fill={`url(#${id}h)`} />
       {[0, 60, 120].map((deg, i) => (
         <g key={deg} transform={`rotate(${deg})`}>
-          <ellipse rx="40" ry="13" fill="none" stroke={ring} strokeWidth="1" opacity=".7" />
-          <circle r="3" fill={electron}>
+          <ellipse rx="40" ry="13" fill="none" stroke={ring} strokeWidth=".9" opacity=".5" />
+          <circle r="2.8" fill={`url(#${id}i)`} filter={`url(#${id}f)`}>
             <animateMotion dur={`${2.6 + i * 0.7}s`} repeatCount="indefinite" path={ORBIT} begin={`-${i * 0.9}s`} />
           </circle>
         </g>
       ))}
+      {nucleons.map(([x, y, c], i) => (
+        <circle key={i} cx={x} cy={y} r="3.3" fill={`url(#${id}${c})`} />
+      ))}
     </svg>
   );
 }
 
-/* Molécula em anel com dois ramos: bastões finos e esferas pequenas que pulsam devagar */
+/* Molécula em bolas e bastões: anel com ramos, esferas de dois tamanhos */
 const NODES = [
-  [0, -22], [19, -11], [19, 11], [0, 22], [-19, 11], [-19, -11], [36, -21], [-36, 21], [0, -42],
+  [0, -20], [17, -10], [17, 10], [0, 20], [-17, 10], [-17, -10], [33, -19], [-33, 19], [0, -38],
 ] as const;
 const BONDS = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0], [1, 6], [4, 7], [0, 8]] as const;
 
-function Molecule({ hue }: { hue: "gold" | "ice" }) {
-  const line = hue === "gold" ? GOLD : ICE;
-  const dot = hue === "gold" ? GOLD_LIGHT : ICE;
+function Molecule({ hue }: { hue: Hue }) {
+  const id = useId().replace(/:/g, "");
   return (
     <svg viewBox="-50 -50 100 100">
+      <Defs id={id} />
       {BONDS.map(([a, b], i) => (
-        <line key={i} x1={NODES[a][0]} y1={NODES[a][1]} x2={NODES[b][0]} y2={NODES[b][1]} stroke={line} strokeWidth="1" opacity=".6" />
+        <g key={i}>
+          <line x1={NODES[a][0]} y1={NODES[a][1]} x2={NODES[b][0]} y2={NODES[b][1]} stroke="#5f4d2a" strokeWidth="3.4" strokeLinecap="round" opacity=".85" />
+          <line x1={NODES[a][0]} y1={NODES[a][1]} x2={NODES[b][0]} y2={NODES[b][1]} stroke={`url(#${id}b)`} strokeWidth="1.3" strokeLinecap="round" opacity=".9" />
+        </g>
       ))}
-      {NODES.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r={i > 5 ? 3.4 : 2.6} fill={i % 3 === 0 ? GOLD_LIGHT : dot}>
-          <animate attributeName="opacity" values=".55;1;.55" dur={`${3 + (i % 4) * 0.8}s`} repeatCount="indefinite" begin={`-${i * 0.5}s`} />
-        </circle>
-      ))}
+      {NODES.map(([x, y], i) => {
+        const big = i < 6 ? i % 2 === 0 : false;
+        const c = hue === "gold" ? (i % 3 === 0 ? "i" : "g") : i % 3 === 0 ? "g" : "i";
+        return <circle key={i} cx={x} cy={y} r={i > 5 ? 3.6 : big ? 6.2 : 5} fill={`url(#${id}${c})`} />;
+      })}
     </svg>
   );
 }
 
-/* Célula: membrana dupla, núcleo e poucas organelas; o conjunto respira */
-function Cell({ hue }: { hue: "gold" | "ice" }) {
-  const line = hue === "gold" ? GOLD : ICE;
+/* Célula translúcida: membrana com borda iluminada, núcleo com volume e mitocôndrias */
+function Cell({ hue }: { hue: Hue }) {
+  const id = useId().replace(/:/g, "");
+  const n = hue === "gold" ? "g" : "i";
   return (
     <svg viewBox="-50 -50 100 100">
-      <circle r="40" fill={line} opacity=".05" />
-      <circle r="40" fill="none" stroke={line} strokeWidth="1" opacity=".7">
-        <animate attributeName="r" values="39;42;39" dur="6s" repeatCount="indefinite" />
-      </circle>
-      <circle r="35" fill="none" stroke={line} strokeWidth=".6" strokeDasharray="2 4" opacity=".45" />
-      <circle cx="6" cy="-4" r="12" fill={GOLD} opacity=".14" stroke={GOLD_LIGHT} strokeWidth=".8">
-        <animate attributeName="r" values="11;13;11" dur="5s" repeatCount="indefinite" />
-      </circle>
-      <circle cx="6" cy="-4" r="3.5" fill={GOLD_LIGHT} opacity=".8" />
-      {[[-20, 10, 2.4], [-14, -18, 1.8], [18, 20, 2.2], [24, -14, 1.6], [-4, 26, 1.8]].map(([x, y, r], i) => (
-        <circle key={i} cx={x} cy={y} r={r} fill={ICE} opacity=".7">
-          <animate attributeName="opacity" values=".35;.85;.35" dur={`${4 + i}s`} repeatCount="indefinite" />
+      <Defs id={id} />
+      <g>
+        <animateTransform attributeName="transform" type="scale" values="1;1.04;1" dur="7s" repeatCount="indefinite" />
+        <circle r="41" fill={`url(#${id}m)`} />
+        <circle r="41" fill="none" stroke="#c6e3f7" strokeWidth=".7" opacity=".45" />
+        <circle r="37" fill="none" stroke="#79b9e4" strokeWidth=".5" strokeDasharray="1.5 3.5" opacity=".35" />
+        {[[-21, 12, 25], [-12, -21, -40], [21, 19, 70], [24, -15, 10]].map(([x, y, r], i) => (
+          <g key={i} transform={`translate(${x} ${y}) rotate(${r})`}>
+            <ellipse rx="6" ry="2.6" fill={`url(#${id}${i % 2 ? "g" : "i"})`} opacity=".75" />
+            <path d="M-4,0 q1,-1.6 2,0 t2,0 t2,0" stroke="#fff8e6" strokeWidth=".4" fill="none" opacity=".5" />
+          </g>
+        ))}
+        <circle cx="5" cy="-3" r="13" fill={`url(#${id}${n})`} opacity=".85">
+          <animate attributeName="r" values="12.5;13.6;12.5" dur="5s" repeatCount="indefinite" />
         </circle>
-      ))}
+        <circle cx="8" cy="-1" r="3.6" fill="#fff8e6" opacity=".35" />
+        <ellipse cx="-16" cy="-22" rx="11" ry="5" transform="rotate(-35 -16 -22)" fill="#ffffff" opacity=".07" />
+      </g>
     </svg>
   );
 }
@@ -153,7 +207,7 @@ export function HeroCells() {
         return (
           <div
             key={i}
-            className={`atom opacity-70 ${a.wide ? "portrait:hidden" : ""}`}
+            className={`atom ${a.size < 11 ? "opacity-55 blur-[.6px]" : "opacity-85"} ${a.wide ? "portrait:hidden" : ""}`}
             style={{ left: `${a.x}%`, top: `${a.y}%`, width: `${a.size}vmin`, height: `${a.size}vmin`, ["--drift" as string]: `${a.drift}s`, ["--spin" as string]: `${a.spin}s`, ["--lag" as string]: `${a.lag}s` }}
           >
             <Shape hue={a.hue} />
