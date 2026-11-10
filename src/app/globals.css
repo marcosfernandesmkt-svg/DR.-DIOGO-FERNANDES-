@@ -93,18 +93,33 @@ html:not(.js) .rm-raise { translate: 0 -4.5rem; }
 }
 
 /* Fundo celular: a imagem nunca é alterada, só a câmera e a luz se movem. */
-.cells-camera { animation: cells-push 26s ease-in-out infinite alternate; will-change: transform; }
-@keyframes cells-push { from { transform: scale(1.03) translate3d(.8%, -.5%, 0); } to { transform: scale(1.12) translate3d(-1.4%, .8%, 0); } }
+.cells-camera { animation: cells-push 17s ease-in-out infinite alternate; will-change: transform; }
+@keyframes cells-push {
+  0% { transform: scale(1.04) translate3d(1.2%, -.8%, 0) rotate(-.4deg); }
+  50% { transform: scale(1.1) translate3d(-.6%, .9%, 0) rotate(.3deg); }
+  100% { transform: scale(1.15) translate3d(-1.8%, -.4%, 0) rotate(-.2deg); }
+}
 .cells-light { animation: cells-light 13s ease-in-out infinite alternate; }
 .cells-light.alt { animation-duration: 19s; animation-delay: -6s; }
 @keyframes cells-light { from { opacity: .25; } to { opacity: 1; } }
 .mote { position: absolute; border-radius: 50%; background: var(--color-gold-light); opacity: 0; animation: mote linear infinite; }
 @keyframes mote {
   0% { opacity: 0; transform: translate3d(0, 0, 0); }
-  18% { opacity: .5; }
-  82% { opacity: .35; }
-  100% { opacity: 0; transform: translate3d(3vw, -9vh, 0); }
+  18% { opacity: .6; }
+  50% { transform: translate3d(3.5vw, -8vh, 0); }
+  82% { opacity: .4; }
+  100% { opacity: 0; transform: translate3d(1.5vw, -17vh, 0); }
 }
+/* Átomos atrás do médico: núcleo dourado, órbitas finas e elétrons em azul e ouro */
+.atom { position: absolute; pointer-events: none; animation: atom-drift var(--drift, 22s) ease-in-out infinite alternate; animation-delay: var(--lag, 0s); }
+.atom svg { width: 100%; height: 100%; overflow: visible; animation: atom-spin var(--spin, 28s) linear infinite; }
+@keyframes atom-drift {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  33% { transform: translate3d(2.6vw, -3.2vh, 0) rotate(8deg); }
+  66% { transform: translate3d(-1.8vw, -6.5vh, 0) rotate(-6deg); }
+  100% { transform: translate3d(1.4vw, 2.4vh, 0) rotate(4deg); }
+}
+@keyframes atom-spin { to { transform: rotate(360deg); } }
 
 /* Cortina dourada do agendamento. */
 .curtain { position: fixed; inset: 0; z-index: 70; visibility: hidden; pointer-events: none; }
@@ -143,7 +158,7 @@ html:not(.js) .rm-raise { translate: 0 -4.5rem; }
   .rm-raise { translate: 0 -4.5rem; }
   .cue-dot { animation: none; }
   .cells-camera, .cells-light, .mote { animation: none; }
-  .mote { display: none; }
+  .mote, .atom { display: none; }
   *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
 

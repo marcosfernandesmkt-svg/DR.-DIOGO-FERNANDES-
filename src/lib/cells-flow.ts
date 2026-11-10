@@ -17,18 +17,19 @@ void main(){
   float ra = uRes.x / uRes.y, ia = uImg.x / uImg.y;
   vec2 s = ra > ia ? vec2(1., ia / ra) : vec2(ra / ia, 1.);
   vec2 o = (1. - s) * vec2(.72, .5);
+  // Mais vida: ondas mais rápidas e uma terceira, lenta e larga, que faz as células "respirarem"
   vec2 w = vec2(
-    sin(uv.y * 6.7 + uT * .46) + .6 * sin(uv.y * 3.1 + uv.x * 4.3 - uT * .33),
-    cos(uv.x * 5.9 + uT * .39) + .6 * sin(uv.x * 2.7 + uv.y * 5.1 + uT * .27)
+    sin(uv.y * 6.7 + uT * .78) + .6 * sin(uv.y * 3.1 + uv.x * 4.3 - uT * .56) + .45 * sin(uv.x * 1.6 + uT * .31),
+    cos(uv.x * 5.9 + uT * .66) + .6 * sin(uv.x * 2.7 + uv.y * 5.1 + uT * .47) + .45 * cos(uv.y * 1.8 - uT * .27)
   );
   // Ondulação ao redor do cursor, como um toque na superfície do líquido
   vec2 toPointer = (uv - uPointer.xy) * vec2(ra, 1.);
   float dist = length(toPointer);
-  vec2 ripple = toPointer / max(dist, .001) * sin(dist * 34. - uT * 2.4) * exp(-dist * 7.) * uPointer.z * .0075;
-  vec3 color = texture2D(uTex, o + (uv + w * .0065 + ripple) * s).rgb;
+  vec2 ripple = toPointer / max(dist, .001) * sin(dist * 34. - uT * 2.4) * exp(-dist * 7.) * uPointer.z * .0105;
+  vec3 color = texture2D(uTex, o + (uv + w * .0105 + ripple) * s).rgb;
   // Só o que já é dourado cintila, em ondas lentas que atravessam a imagem
   float warm = smoothstep(.04, .3, color.r - color.b * .72);
-  float wave = .5 + .5 * sin(uv.x * 7. - uv.y * 4. + uT * .7);
+  float wave = .5 + .5 * sin(uv.x * 7. - uv.y * 4. + uT * 1.05);
   color *= 1. + warm * wave * wave * .42;
   gl_FragColor = vec4(color, 1.);
 }`;
