@@ -93,8 +93,12 @@ html:not(.js) .rm-raise { translate: 0 -4.5rem; }
 }
 
 /* Fundo celular: a imagem nunca é alterada, só a câmera e a luz se movem. */
-.cells-camera { animation: cells-push 26s ease-in-out infinite alternate; will-change: transform; }
-@keyframes cells-push { from { transform: scale(1.03) translate3d(.8%, -.5%, 0); } to { transform: scale(1.12) translate3d(-1.4%, .8%, 0); } }
+.cells-camera { animation: cells-push 17s ease-in-out infinite alternate; will-change: transform; }
+@keyframes cells-push {
+  0% { transform: scale(1.04) translate3d(1.2%, -.8%, 0) rotate(-.4deg); }
+  50% { transform: scale(1.1) translate3d(-.6%, .9%, 0) rotate(.3deg); }
+  100% { transform: scale(1.15) translate3d(-1.8%, -.4%, 0) rotate(-.2deg); }
+}
 .cells-light { animation: cells-light 13s ease-in-out infinite alternate; }
 .cells-light.alt { animation-duration: 19s; animation-delay: -6s; }
 @keyframes cells-light { from { opacity: .25; } to { opacity: 1; } }
